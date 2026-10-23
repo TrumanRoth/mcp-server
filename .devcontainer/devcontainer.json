@@ -1,0 +1,23 @@
+{
+  "name": "stock-mcp-server",
+  "image": "mcr.microsoft.com/devcontainers/python:1-3.12-bookworm",
+  "remoteUser": "vscode",
+  "forwardPorts": [
+    8000
+  ],
+  "portsAttributes": {
+    "8000": {
+      "label": "stock-mcp-server",
+      "onAutoForward": "notify"
+    }
+  },
+  "postCreateCommand": "python -m pip install --user -r requirements.txt",
+  "postStartCommand": "bash -lc 'nohup flock -n /tmp/stock-mcp-server.lock python -u server.py >> /tmp/stock-mcp-server.log 2>&1 < /dev/null &'",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python"
+      ]
+    }
+  }
+}
